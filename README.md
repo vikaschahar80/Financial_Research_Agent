@@ -2,7 +2,7 @@
 
 An AI-powered agent that reads **SEC filings, earnings call transcripts, and RBI reports** — and generates structured investment summaries using a **RAG (Retrieval-Augmented Generation)** pipeline.
 
-Built with **LangChain + OpenAI GPT-4o + ChromaDB**, deployed via **Streamlit**.
+Built with **LangChain + Groq (Llama 3) + Local HuggingFace Embeddings + ChromaDB**, deployed via **Streamlit**.
 
 ---
 
@@ -11,7 +11,7 @@ Built with **LangChain + OpenAI GPT-4o + ChromaDB**, deployed via **Streamlit**.
 | Feature | Description |
 |---|---|
 | 📄 Document Ingestion | Upload PDFs or TXT files (10-K, 10-Q, earnings transcripts, RBI reports) |
-| 🔍 Semantic Retrieval | ChromaDB vector store with OpenAI embeddings |
+| 🔍 Semantic Retrieval | ChromaDB vector store with local HuggingFace embeddings |
 | 🤖 AI Agent | ReAct agent that uses tools to answer complex financial queries |
 | 📊 Investment Memos | Generates structured bull/bear case analysis in JSON + Markdown |
 | 💬 Chat Interface | Multi-turn Q&A grounded in your uploaded documents |
@@ -27,7 +27,7 @@ User uploads PDF/TXT
   FinancialRAGPipeline
   ├── PyPDFLoader / TextLoader
   ├── RecursiveCharacterTextSplitter (1500 tokens, 200 overlap)
-  ├── OpenAI text-embedding-3-small
+  ├── Local HuggingFace Embeddings (all-MiniLM-L6-v2)
   └── ChromaDB (persisted vector store)
         ↓
   FinancialResearchAgent (LangChain ReAct)
@@ -56,9 +56,9 @@ pip install -r requirements.txt
 ### 2. Set API Key
 
 ```bash
-export OPENAI_API_KEY="sk-..."
+export GROQ_API_KEY="gsk_..."
 # or create a .env file:
-echo "OPENAI_API_KEY=sk-..." > .env
+echo "GROQ_API_KEY=gsk_..." > .env
 ```
 
 ### 3. Run the App
@@ -126,14 +126,14 @@ Once documents are loaded, try:
 | `chunk_size` | 1500 | Token size per chunk (larger = more context per chunk) |
 | `chunk_overlap` | 200 | Overlap between chunks to preserve continuity |
 | `k` (retrieval) | 6 | Number of chunks retrieved per query |
-| `model` | gpt-4o | OpenAI model (swap to gpt-3.5-turbo to save cost) |
-| `embedding` | text-embedding-3-small | Embedding model |
+| `model` | llama-3.3-70b-versatile | Groq Llama 3 model (can swap to llama3-8b-8192) |
+| `embedding` | all-MiniLM-L6-v2 | Local HuggingFace Embedding model |
 
 ---
 
 ## 📊 Resume Highlights (How to Present This)
 
-- **Built an end-to-end RAG pipeline** for financial document analysis using LangChain, ChromaDB, and OpenAI GPT-4o
+- **Built an end-to-end RAG pipeline** for financial document analysis using LangChain, ChromaDB, and Groq (Llama 3)
 - **Implemented a ReAct agent** with custom financial retrieval and summarization tools
 - **Reduced research time by ~70%** on earnings call analysis (benchmark against manual reading)
 - **Deployed on Streamlit** with multi-turn chat, structured report generation, and debug tooling
@@ -144,7 +144,8 @@ Once documents are loaded, try:
 ## 🛠️ Tech Stack
 
 - **LangChain** — Agent orchestration, document loaders, prompt templates
-- **OpenAI GPT-4o** — Language model for reasoning and generation
+- **Groq (Llama 3)** — Language model for reasoning and generation
+- **HuggingFace Embeddings** — Local embedding model
 - **ChromaDB** — Persisted local vector database
 - **Streamlit** — Web UI
 - **PyPDF** — PDF parsing

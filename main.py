@@ -24,8 +24,8 @@ def main():
     parser.add_argument("--report", action="store_true", help="Generate a full investment report")
     args = parser.parse_args()
 
-    if not os.environ.get("OPENAI_API_KEY"):
-        raise EnvironmentError("Set OPENAI_API_KEY environment variable first.")
+    if not os.environ.get("GROQ_API_KEY"):
+        raise EnvironmentError("Set GROQ_API_KEY environment variable first.")
 
     # ── Load and ingest document ──
     rag = FinancialRAGPipeline()
