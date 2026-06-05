@@ -1,0 +1,43 @@
+# Environment
+.env
+*.env
+
+# API Keys — never commit
+secrets.py
+
+# Vector store (large, rebuild locally)
+chroma_db/
+
+# Data files (PDFs often confidential/large)
+data/
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+.Python
+*.egg-info/
+dist/
+build/
+.eggs/
+
+# Jupyter
+.ipynb_checkpoints/
+notebooks/.ipynb_checkpoints/
+
+# Virtual environments
+venv/
+env/
+.venv/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Streamlit
+.streamlit/secrets.toml
